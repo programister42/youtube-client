@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SearchResponseModel } from '../../models/search-response.model';
-import { SearchItemModel } from '../../models/search-item.model';
+import { SearchResponseModel } from '../../shared/models/search-response.model';
+import { SearchItemModel } from '../../shared/models/search-item.model';
 
 @Component({
   selector: 'app-search-results',
