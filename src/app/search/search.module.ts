@@ -5,5 +5,6 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 @NgModule({
   declarations: [SearchResultsComponent],
   imports: [CommonModule],
+  exports: [SearchResultsComponent],
 })
 export class SearchModule {}

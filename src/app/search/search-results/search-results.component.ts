@@ -8,7 +8,7 @@ import { SearchItemModel } from '../../shared/models/search-item.model';
   styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent {
-  searchResponse: SearchResponseModel;
+  searchResponse!: SearchResponseModel;
 
-  searchResultsList: SearchItemModel[];
+  searchResultsList!: SearchItemModel[];
 }
