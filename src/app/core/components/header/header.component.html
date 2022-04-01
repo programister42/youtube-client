@@ -34,7 +34,7 @@
     <mat-form-field appearance='fill'
                     class='example-form-field'
                     color='accent'
-                    style='font-size: 0.6em'>
+                    [style.font-size]='"0.6em"'>
       <mat-label>by keyword</mat-label>
       <input [(ngModel)]='filteringValue'
              matInput

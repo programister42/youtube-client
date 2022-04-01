@@ -1,0 +1,3 @@
+<ng-container *ngIf='isSearching'>
+  <app-card *ngFor='let card of searchResultsList' [video]='card'></app-card>
+</ng-container>

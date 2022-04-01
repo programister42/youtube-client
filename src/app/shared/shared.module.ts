@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexCenterDirective } from './directives/flex-center.directive';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PublicationColorDirective } from './directives/publication-color.directive';
 
 const materialModules = [
   MatCardModule,
@@ -18,10 +22,13 @@ const materialModules = [
   MatInputModule,
   MatButtonModule,
   MatChipsModule,
+  MatGridListModule,
+  MatDividerModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
-  declarations: [CardComponent, FlexCenterDirective],
+  declarations: [CardComponent, FlexCenterDirective, PublicationColorDirective],
   imports: [CommonModule, ...materialModules],
   exports: [CardComponent, ...materialModules, FlexCenterDirective],
 })
