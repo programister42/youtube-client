@@ -1,10 +1,18 @@
-import { Directive, ElementRef, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Renderer2,
+  RendererStyleFlags2,
+} from '@angular/core';
 
 @Directive({
   selector: '[appFlexCenter]',
 })
-export class FlexCenterDirective {
-  constructor(private elementRef: ElementRef, private renderer2: Renderer2) {
+export class FlexCenterDirective implements AfterViewInit {
+  constructor(private elementRef: ElementRef, private renderer2: Renderer2) {}
+
+  ngAfterViewInit(): void {
     this.renderer2.setStyle(
       this.elementRef.nativeElement,
       'display',
