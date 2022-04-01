@@ -25,5 +25,12 @@ export class FlexCenterDirective {
       'center',
       RendererStyleFlags2.Important,
     );
+
+    this.renderer2.setStyle(
+      this.elementRef.nativeElement,
+      'gap',
+      '10px',
+      RendererStyleFlags2.Important,
+    );
   }
 }

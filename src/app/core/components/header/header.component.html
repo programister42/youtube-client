@@ -1,15 +1,51 @@
 <mat-toolbar>
-  <mat-toolbar-row>
+  <mat-toolbar-row class='toolbar-row'>
     <span appFlexCenter>
-      <mat-icon aria-hidden='false' aria-label='Video icon'>play_circle_outline</mat-icon>
+      <mat-icon aria-hidden='false'
+                aria-label='Video icon'>play_circle_outline</mat-icon>
       YouTube
     </span>
 
-    <app-search-bar></app-search-bar>
+    <div appFlexCenter class='search-wrapper'>
+      <app-search-bar></app-search-bar>
+      <button (click)='onFilterToggle()'
+              aria-label='Toggle filtering block button'
+              color='{{ isFiltering ? "accent" : null}}'
+              mat-icon-button>
+        <mat-icon>filter_alt</mat-icon>
+      </button>
+    </div>
+
     <button mat-stroked-button>
       <span appFlexCenter>Login
-        <mat-icon aria-hidden='false' aria-label='Video icon' matSuffix>login</mat-icon>
+        <mat-icon aria-hidden='false'
+                  aria-label='Video icon'
+                  matSuffix>login</mat-icon>
       </span>
     </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row *ngIf='isFiltering' appFlexCenter>
+    <span>Sort by: </span>
+    <mat-chip-list aria-label='Sorting criteria'>
+      <mat-chip>date</mat-chip>
+      <mat-chip>views</mat-chip>
+    </mat-chip-list>
+    <mat-form-field appearance='fill'
+                    class='example-form-field'
+                    color='accent'
+                    style='font-size: 0.6em'>
+      <mat-label>by keyword</mat-label>
+      <input [(ngModel)]='filteringValue'
+             matInput
+             type='text'>
+      <button (click)="filteringValue=''"
+              *ngIf='filteringValue'
+              aria-label='Clear'
+              mat-icon-button
+              matSuffix>
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </mat-toolbar-row>
 </mat-toolbar>

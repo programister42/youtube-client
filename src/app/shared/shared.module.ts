@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexCenterDirective } from './directives/flex-center.directive';
+import { MatChipsModule } from '@angular/material/chips';
 
 const materialModules = [
   MatCardModule,
@@ -16,6 +17,7 @@ const materialModules = [
   MatIconModule,
   MatInputModule,
   MatButtonModule,
+  MatChipsModule,
 ];
 
 @NgModule({
