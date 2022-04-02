@@ -14,7 +14,7 @@ export class SearchBarComponent {
 
   constructor(private searchService: SearchMockupService) {}
 
-  onSubmit(e: Event) {
+  onSubmit(e: Event): void {
     e.preventDefault();
     this.searchService.setSearching(!!this.searchForm.value.searchInput);
   }

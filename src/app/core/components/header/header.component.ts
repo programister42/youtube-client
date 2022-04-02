@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
 
   sortingByDate: SortingOrder = SortingOrder.Off;
 
+  sortingByViews: SortingOrder = SortingOrder.Off;
+
   sortingOrder: typeof SortingOrder = SortingOrder;
 
   constructor(
@@ -22,7 +24,7 @@ export class HeaderComponent implements OnInit {
     private searchDataService: SearchDataService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.searchMockupService.isFiltering.subscribe(
       (isFiltering) => (this.isFiltering = isFiltering),
     );
@@ -30,13 +32,21 @@ export class HeaderComponent implements OnInit {
     this.searchDataService.sortingByDate$.subscribe(
       (sortingByDate) => (this.sortingByDate = sortingByDate),
     );
+
+    this.searchDataService.sortingByViews$.subscribe(
+      (sortingByViews) => (this.sortingByViews = sortingByViews),
+    );
   }
 
-  onFilterToggle() {
+  onFilterToggle(): void {
     this.searchMockupService.toggleFiltering();
   }
 
-  sortByDate() {
+  sortByDate(): void {
     this.searchDataService.sortByDate();
+  }
+
+  sortByViews(): void {
+    this.searchDataService.sortByViews();
   }
 }

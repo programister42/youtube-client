@@ -36,7 +36,13 @@
           <mat-icon *ngSwitchCase='sortingOrder.Descending' appChipIcon>arrow_downward</mat-icon>
         </ng-container>
       </mat-chip>
-      <mat-chip>views</mat-chip>
+      <mat-chip (click)='sortByViews()' [selected]='sortingByViews !== sortingOrder.Off' appFlexCenter>
+        views
+        <ng-container [ngSwitch]='sortingByViews'>
+          <mat-icon *ngSwitchCase='sortingOrder.Ascending' appChipIcon>arrow_upward</mat-icon>
+          <mat-icon *ngSwitchCase='sortingOrder.Descending' appChipIcon>arrow_downward</mat-icon>
+        </ng-container>
+      </mat-chip>
     </mat-chip-list>
 
     <mat-form-field appearance='fill'

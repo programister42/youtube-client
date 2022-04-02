@@ -18,7 +18,7 @@ export class SearchResultsComponent implements OnInit {
     private searchDataService: SearchDataService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.searchMockupService.isSearching.subscribe((isSearching) => {
       this.isSearching = isSearching;
     });

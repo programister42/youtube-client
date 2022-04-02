@@ -9,11 +9,11 @@ export class SearchMockupService {
 
   isFiltering: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  setSearching(isSearching: boolean) {
+  setSearching(isSearching: boolean): void {
     this.isSearching.next(isSearching);
   }
 
-  toggleFiltering() {
+  toggleFiltering(): void {
     this.isFiltering.next(!this.isFiltering.value);
   }
 }
