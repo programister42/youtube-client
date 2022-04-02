@@ -4,25 +4,25 @@
     <mat-chip-list aria-label='Video statistics'>
       <mat-chip>
         <mat-chip-avatar>
-          <mat-icon aria-hidden='false' aria-label='Views icon' class='chip-icon'>visibility</mat-icon>
+          <mat-icon appChipIcon aria-hidden='false' aria-label='Views icon'>visibility</mat-icon>
         </mat-chip-avatar>
         {{video.statistics.viewCount}}
       </mat-chip>
       <mat-chip color='primary'>
         <mat-chip-avatar>
-          <mat-icon aria-hidden='false' aria-label='Likes icon' class='chip-icon'>thumb_up</mat-icon>
+          <mat-icon appChipIcon aria-hidden='false' aria-label='Likes icon'>thumb_up</mat-icon>
         </mat-chip-avatar>
         {{video.statistics.likeCount}}
       </mat-chip>
       <mat-chip color='accent'>
         <mat-chip-avatar>
-          <mat-icon aria-hidden='false' aria-label='Dislikes icon' class='chip-icon'>thumb_down</mat-icon>
+          <mat-icon appChipIcon aria-hidden='false' aria-label='Dislikes icon'>thumb_down</mat-icon>
         </mat-chip-avatar>
         {{video.statistics.dislikeCount}}
       </mat-chip>
       <mat-chip color='accent'>
         <mat-chip-avatar>
-          <mat-icon aria-hidden='false' aria-label='Comments icon' class='chip-icon'>comment</mat-icon>
+          <mat-icon appChipIcon aria-hidden='false' aria-label='Comments icon'>comment</mat-icon>
         </mat-chip-avatar>
         {{video.statistics.commentCount}}
       </mat-chip>

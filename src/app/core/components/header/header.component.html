@@ -27,10 +27,18 @@
 
   <mat-toolbar-row *ngIf='isFiltering' appFlexCenter>
     <span>Sort by: </span>
+
     <mat-chip-list aria-label='Sorting criteria'>
-      <mat-chip>date</mat-chip>
+      <mat-chip (click)='sortByDate()' [selected]='sortingByDate !== sortingOrder.Off' appFlexCenter>
+        date
+        <ng-container [ngSwitch]='sortingByDate'>
+          <mat-icon *ngSwitchCase='sortingOrder.Ascending' appChipIcon>arrow_upward</mat-icon>
+          <mat-icon *ngSwitchCase='sortingOrder.Descending' appChipIcon>arrow_downward</mat-icon>
+        </ng-container>
+      </mat-chip>
       <mat-chip>views</mat-chip>
     </mat-chip-list>
+
     <mat-form-field appearance='fill'
                     class='example-form-field'
                     color='accent'

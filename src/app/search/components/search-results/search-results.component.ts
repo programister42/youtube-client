@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchResponseModel } from '../../../shared/models/search-response.model';
-import { SearchItemModel } from '../../../shared/models/search-item.model';
-import * as response from '../../response.json';
 import { SearchMockupService } from '../../../core/services/search-mockup.service';
+import { SearchDataService } from '../../services/search-data.service';
+import { SearchItemModel } from '../../../shared/models/search-item.model';
 
 @Component({
   selector: 'app-search-results',
@@ -12,15 +11,20 @@ import { SearchMockupService } from '../../../core/services/search-mockup.servic
 export class SearchResultsComponent implements OnInit {
   isSearching: boolean = false;
 
-  searchResponse: SearchResponseModel = response;
+  searchResults: SearchItemModel[] | undefined;
 
-  searchResultsList: SearchItemModel[] = this.searchResponse.items;
-
-  constructor(private searchService: SearchMockupService) {}
+  constructor(
+    private searchMockupService: SearchMockupService,
+    private searchDataService: SearchDataService,
+  ) {}
 
   ngOnInit() {
-    this.searchService.isSearching.subscribe((isSearching) => {
+    this.searchMockupService.isSearching.subscribe((isSearching) => {
       this.isSearching = isSearching;
+    });
+
+    this.searchDataService.searchResultsList$.subscribe((results) => {
+      this.searchResults = results;
     });
   }
 }

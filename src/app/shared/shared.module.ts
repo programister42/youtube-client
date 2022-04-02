@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PublicationColorDirective } from './directives/publication-color.directive';
+import { ChipIconDirective } from './directives/chip-icon.directive';
 
 const materialModules = [
   MatCardModule,
@@ -28,8 +29,8 @@ const materialModules = [
 ];
 
 @NgModule({
-  declarations: [CardComponent, FlexCenterDirective, PublicationColorDirective],
+  declarations: [CardComponent, FlexCenterDirective, PublicationColorDirective, ChipIconDirective],
   imports: [CommonModule, ...materialModules],
-  exports: [CardComponent, ...materialModules, FlexCenterDirective],
+  exports: [CardComponent, ...materialModules, FlexCenterDirective, ChipIconDirective],
 })
 export class SharedModule {}
