@@ -1,5 +1,7 @@
 :host {
-  display: grid;
-  grid-template-columns: repeat(4, calc((100% - 3 * 16px) / 4));
-  grid-gap: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 16px;
 }

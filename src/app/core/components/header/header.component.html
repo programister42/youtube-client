@@ -10,7 +10,11 @@
       <app-search-bar></app-search-bar>
       <button (click)='onFilterToggle()'
               aria-label='Toggle filtering block button'
-              color='{{ isFiltering ? "accent" : null}}'
+              color='{{sortingByDate !== sortingOrder.Off ||
+                sortingByViews !== sortingOrder.Off ||
+                isFilteringByWord
+                  ? "primary"
+                  : isSorting ? "accent" : null}}'
               mat-icon-button>
         <mat-icon>filter_alt</mat-icon>
       </button>
@@ -25,7 +29,7 @@
     </button>
   </mat-toolbar-row>
 
-  <mat-toolbar-row *ngIf='isFiltering' appFlexCenter>
+  <mat-toolbar-row *ngIf='isSorting' appFlexCenter>
     <span>Sort by: </span>
 
     <mat-chip-list aria-label='Sorting criteria'>
@@ -45,16 +49,17 @@
       </mat-chip>
     </mat-chip-list>
 
-    <mat-form-field appearance='fill'
+    <mat-form-field (input)='filterByWord()'
+                    appearance='standard'
                     class='example-form-field'
                     color='accent'
                     [style.font-size]='"0.6em"'>
       <mat-label>by keyword</mat-label>
-      <input [(ngModel)]='filteringValue'
+      <input [(ngModel)]='filterWord'
              matInput
              type='text'>
-      <button (click)="filteringValue=''"
-              *ngIf='filteringValue'
+      <button (click)="filterWord=''; filterByWord()"
+              *ngIf='filterWord'
               aria-label='Clear'
               mat-icon-button
               matSuffix>

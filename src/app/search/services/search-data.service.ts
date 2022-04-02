@@ -30,6 +30,8 @@ export class SearchDataService {
     SortingOrder.Off,
   );
 
+  filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor() {
     this.sortingByDate$.subscribe((value) => {
       this.sortingCallback(value, SortingBy.Date);
@@ -52,22 +54,6 @@ export class SearchDataService {
         subject.next(SortingOrder.Descending);
         break;
     }
-  }
-
-  sortByDate(): void {
-    if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
-      this.sortingByViews$.next(SortingOrder.Off);
-    }
-
-    SearchDataService.sort(this.sortingByDate$);
-  }
-
-  sortByViews(): void {
-    if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
-      this.sortingByDate$.next(SortingOrder.Off);
-    }
-
-    SearchDataService.sort(this.sortingByViews$);
   }
 
   private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
@@ -106,5 +92,25 @@ export class SearchDataService {
         this.searchResultsList$.next([...this.searchResponse$.getValue().items]);
         break;
     }
+  }
+
+  sortByDate(): void {
+    if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
+      this.sortingByViews$.next(SortingOrder.Off);
+    }
+
+    SearchDataService.sort(this.sortingByDate$);
+  }
+
+  sortByViews(): void {
+    if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
+      this.sortingByDate$.next(SortingOrder.Off);
+    }
+
+    SearchDataService.sort(this.sortingByViews$);
+  }
+
+  setFilteringWord(word: string): void {
+    this.filterWord$.next(word);
   }
 }

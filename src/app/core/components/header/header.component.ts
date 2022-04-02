@@ -9,9 +9,9 @@ import { SortingOrder } from '../../../shared/models/sorting-order';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isFiltering: boolean = false;
+  isSorting: boolean = false;
 
-  filteringValue: string = '';
+  filterWord: string = '';
 
   sortingByDate: SortingOrder = SortingOrder.Off;
 
@@ -19,15 +19,15 @@ export class HeaderComponent implements OnInit {
 
   sortingOrder: typeof SortingOrder = SortingOrder;
 
+  isFilteringByWord: boolean = false;
+
   constructor(
     private searchMockupService: SearchMockupService,
     private searchDataService: SearchDataService,
   ) {}
 
   ngOnInit(): void {
-    this.searchMockupService.isFiltering.subscribe(
-      (isFiltering) => (this.isFiltering = isFiltering),
-    );
+    this.searchMockupService.isFiltering.subscribe((isFiltering) => (this.isSorting = isFiltering));
 
     this.searchDataService.sortingByDate$.subscribe(
       (sortingByDate) => (this.sortingByDate = sortingByDate),
@@ -35,6 +35,10 @@ export class HeaderComponent implements OnInit {
 
     this.searchDataService.sortingByViews$.subscribe(
       (sortingByViews) => (this.sortingByViews = sortingByViews),
+    );
+
+    this.searchDataService.filterWord$.subscribe(
+      (filterWord) => (this.isFilteringByWord = filterWord !== ''),
     );
   }
 
@@ -48,5 +52,9 @@ export class HeaderComponent implements OnInit {
 
   sortByViews(): void {
     this.searchDataService.sortByViews();
+  }
+
+  filterByWord(): void {
+    this.searchDataService.setFilteringWord(this.filterWord);
   }
 }

@@ -11,7 +11,9 @@ import { SearchItemModel } from '../../../shared/models/search-item.model';
 export class SearchResultsComponent implements OnInit {
   isSearching: boolean = false;
 
-  searchResults: SearchItemModel[] | undefined;
+  searchResults!: SearchItemModel[];
+
+  filteringWord: string = '';
 
   constructor(
     private searchMockupService: SearchMockupService,
@@ -25,6 +27,10 @@ export class SearchResultsComponent implements OnInit {
 
     this.searchDataService.searchResultsList$.subscribe((results) => {
       this.searchResults = results;
+    });
+
+    this.searchDataService.filterWord$.subscribe((word) => {
+      this.filteringWord = word;
     });
   }
 }
