@@ -7,5 +7,5 @@ import { SearchItemModel } from '../../models/search-item.model';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-  @Input() video: SearchItemModel;
+  @Input() video!: SearchItemModel;
 }

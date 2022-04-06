@@ -1,0 +1,9 @@
+<form (ngSubmit)='onSubmit($event)' [formGroup]='searchForm'>
+  <mat-form-field appearance='outline' color='accent'>
+    <mat-label>Search videos</mat-label>
+    <input formControlName='searchInput' matInput type='search'>
+    <button aria-label='Search' mat-icon-button matSuffix type='submit'>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

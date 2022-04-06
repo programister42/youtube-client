@@ -1,0 +1,70 @@
+<mat-toolbar>
+  <mat-toolbar-row class='toolbar-row'>
+    <span appFlexCenter>
+      <mat-icon aria-hidden='false'
+                aria-label='Video icon'>play_circle_outline</mat-icon>
+      YouTube
+    </span>
+
+    <div appFlexCenter class='search-wrapper'>
+      <app-search-bar></app-search-bar>
+      <button (click)='onFilterToggle()'
+              aria-label='Toggle filtering block button'
+              color='{{sortingByDate !== sortingOrder.Off ||
+                sortingByViews !== sortingOrder.Off ||
+                isFilteringByWord
+                  ? "primary"
+                  : isSorting ? "accent" : null}}'
+              mat-icon-button>
+        <mat-icon>filter_alt</mat-icon>
+      </button>
+    </div>
+
+    <button mat-stroked-button>
+      <span appFlexCenter>Login
+        <mat-icon aria-hidden='false'
+                  aria-label='Video icon'
+                  matSuffix>login</mat-icon>
+      </span>
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row *ngIf='isSorting' appFlexCenter>
+    <span>Sort by: </span>
+
+    <mat-chip-list aria-label='Sorting criteria'>
+      <mat-chip (click)='sortByDate()' [selected]='sortingByDate !== sortingOrder.Off' appFlexCenter>
+        date
+        <ng-container [ngSwitch]='sortingByDate'>
+          <mat-icon *ngSwitchCase='sortingOrder.Ascending' appChipIcon>arrow_upward</mat-icon>
+          <mat-icon *ngSwitchCase='sortingOrder.Descending' appChipIcon>arrow_downward</mat-icon>
+        </ng-container>
+      </mat-chip>
+      <mat-chip (click)='sortByViews()' [selected]='sortingByViews !== sortingOrder.Off' appFlexCenter>
+        views
+        <ng-container [ngSwitch]='sortingByViews'>
+          <mat-icon *ngSwitchCase='sortingOrder.Ascending' appChipIcon>arrow_upward</mat-icon>
+          <mat-icon *ngSwitchCase='sortingOrder.Descending' appChipIcon>arrow_downward</mat-icon>
+        </ng-container>
+      </mat-chip>
+    </mat-chip-list>
+
+    <mat-form-field (input)='filterByWord()'
+                    appearance='standard'
+                    class='example-form-field'
+                    color='accent'
+                    [style.font-size]='"0.6em"'>
+      <mat-label>by keyword</mat-label>
+      <input [(ngModel)]='filterWord'
+             matInput
+             type='text'>
+      <button (click)="filterWord=''; filterByWord()"
+              *ngIf='filterWord'
+              aria-label='Clear'
+              mat-icon-button
+              matSuffix>
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-toolbar-row>
+</mat-toolbar>
