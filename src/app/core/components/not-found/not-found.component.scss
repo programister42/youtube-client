@@ -1,0 +1,38 @@
+:host {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.card {
+		display: grid;
+		align-items: center;
+		grid-auto-columns: auto 1fr;
+		grid-template-areas:
+			"ico status"
+			"ico title"
+			"desc desc";
+
+		.icon {
+			margin-right: 16px;
+			grid-area: ico;
+			font-size: 5rem;
+			height: fit-content;
+			width: fit-content;
+		}
+
+		.status {
+			grid-area: status;
+		}
+
+		.title {
+			grid-area: title;
+		}
+
+		.description {
+			margin-top: 16px;
+			grid-area: desc;
+		}
+	}
+}
