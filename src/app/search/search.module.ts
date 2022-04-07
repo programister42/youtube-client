@@ -10,6 +10,5 @@ const routes: Routes = [{ path: '', component: SearchResultsComponent }];
 @NgModule({
 	declarations: [SearchResultsComponent, FilterByWordPipe],
 	imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
-	exports: [],
 })
 export class SearchModule {}

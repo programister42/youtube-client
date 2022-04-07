@@ -15,7 +15,7 @@
 			"desc desc";
 
 		.icon {
-			margin-right: 16px;
+			margin-right: 1rem;
 			grid-area: ico;
 			font-size: 5rem;
 			height: fit-content;
@@ -31,7 +31,7 @@
 		}
 
 		.description {
-			margin-top: 16px;
+			margin-top: 1rem;
 			grid-area: desc;
 		}
 	}

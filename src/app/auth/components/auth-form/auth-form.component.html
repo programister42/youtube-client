@@ -1,0 +1,27 @@
+<form (ngSubmit)="onSubmit()"
+	  [formGroup]="authForm"
+	  class="auth-form">
+	<mat-form-field appearance="fill" color="accent">
+		<mat-label>Login</mat-label>
+		<input formControlName="login" matInput>
+	</mat-form-field>
+	<mat-form-field appearance="fill" color="accent">
+		<mat-label>Password</mat-label>
+		<input [type]="hidePassword ? 'password' : 'text'"
+			   formControlName="password"
+			   matInput>
+		<button (click)="hidePassword = !hidePassword"
+				[attr.aria-label]="'Hide password'"
+				[attr.aria-pressed]="hidePassword"
+				mat-icon-button matSuffix
+				type="button">
+			<mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+		</button>
+	</mat-form-field>
+	<button [disabled]="!authForm.valid"
+			color="primary"
+			mat-raised-button
+			type="submit">
+		Login
+	</button>
+</form>

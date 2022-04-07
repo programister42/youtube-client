@@ -8,6 +8,10 @@ const routes: Routes = [
 		path: 'main',
 		loadChildren: () => import('./search/search.module').then((module) => module.SearchModule),
 	},
+	{
+		path: 'auth',
+		loadChildren: () => import('./auth/auth.module').then((module) => module.AuthModule),
+	},
 	{ path: '**', component: NotFoundComponent },
 	// { path: 'simple', component: SimpleRedicrectComponent },
 	// {
