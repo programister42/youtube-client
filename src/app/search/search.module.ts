@@ -5,8 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FilterByWordPipe } from './pipes/filter-by-word.pipe';
 
 @NgModule({
-  declarations: [SearchResultsComponent, FilterByWordPipe],
-  imports: [CommonModule, SharedModule],
-  exports: [SearchResultsComponent],
+	declarations: [SearchResultsComponent, FilterByWordPipe],
+	imports: [CommonModule, SharedModule],
+	exports: [SearchResultsComponent],
 })
 export class SearchModule {}

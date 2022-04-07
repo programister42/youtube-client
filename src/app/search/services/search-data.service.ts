@@ -6,111 +6,110 @@ import response from '../response.json';
 import { SortingOrder } from '../../shared/models/sorting-order';
 
 enum SortingBy {
-  Date,
-  Views,
+	Date,
+	Views,
 }
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class SearchDataService {
-  searchResponse$: BehaviorSubject<SearchResponseModel> = new BehaviorSubject<SearchResponseModel>(
-    response,
-  );
+	searchResponse$: BehaviorSubject<SearchResponseModel> =
+		new BehaviorSubject<SearchResponseModel>(response);
 
-  searchResultsList$: BehaviorSubject<SearchItemModel[]> = new BehaviorSubject<SearchItemModel[]>(
-    this.searchResponse$.getValue().items,
-  );
+	searchResultsList$: BehaviorSubject<SearchItemModel[]> = new BehaviorSubject<SearchItemModel[]>(
+		this.searchResponse$.getValue().items,
+	);
 
-  sortingByDate$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
-    SortingOrder.Off,
-  );
+	sortingByDate$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
+		SortingOrder.Off,
+	);
 
-  sortingByViews$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
-    SortingOrder.Off,
-  );
+	sortingByViews$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
+		SortingOrder.Off,
+	);
 
-  filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor() {
-    this.sortingByDate$.subscribe((value) => {
-      this.sortingCallback(value, SortingBy.Date);
-    });
+	constructor() {
+		this.sortingByDate$.subscribe((value) => {
+			this.sortingCallback(value, SortingBy.Date);
+		});
 
-    this.sortingByViews$.subscribe((value) => {
-      this.sortingCallback(value, SortingBy.Views);
-    });
-  }
+		this.sortingByViews$.subscribe((value) => {
+			this.sortingCallback(value, SortingBy.Views);
+		});
+	}
 
-  private static sort(subject: BehaviorSubject<SortingOrder>): void {
-    switch (subject.getValue()) {
-      case SortingOrder.Descending:
-        subject.next(SortingOrder.Ascending);
-        break;
-      case SortingOrder.Ascending:
-        subject.next(SortingOrder.Off);
-        break;
-      default:
-        subject.next(SortingOrder.Descending);
-        break;
-    }
-  }
+	private static sort(subject: BehaviorSubject<SortingOrder>): void {
+		switch (subject.getValue()) {
+			case SortingOrder.Descending:
+				subject.next(SortingOrder.Ascending);
+				break;
+			case SortingOrder.Ascending:
+				subject.next(SortingOrder.Off);
+				break;
+			default:
+				subject.next(SortingOrder.Descending);
+				break;
+		}
+	}
 
-  private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
-    switch (value) {
-      case SortingOrder.Ascending:
-        this.searchResultsList$.next(
-          [...this.searchResultsList$.getValue()].sort((a, b) => {
-            const first: number =
-              sortingBy === SortingBy.Date
-                ? Number(new Date(a.snippet.publishedAt))
-                : Number(a.statistics.viewCount);
-            const second =
-              sortingBy === SortingBy.Date
-                ? Number(new Date(b.snippet.publishedAt))
-                : Number(b.statistics.viewCount);
-            return first - second;
-          }),
-        );
-        break;
-      case SortingOrder.Descending:
-        this.searchResultsList$.next(
-          [...this.searchResultsList$.getValue()].sort((a, b) => {
-            const first: number =
-              sortingBy === SortingBy.Date
-                ? Number(new Date(a.snippet.publishedAt))
-                : Number(a.statistics.viewCount);
-            const second =
-              sortingBy === SortingBy.Date
-                ? Number(new Date(b.snippet.publishedAt))
-                : Number(b.statistics.viewCount);
-            return second - first;
-          }),
-        );
-        break;
-      default:
-        this.searchResultsList$.next([...this.searchResponse$.getValue().items]);
-        break;
-    }
-  }
+	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
+		switch (value) {
+			case SortingOrder.Ascending:
+				this.searchResultsList$.next(
+					[...this.searchResultsList$.getValue()].sort((a, b) => {
+						const first: number =
+							sortingBy === SortingBy.Date
+								? Number(new Date(a.snippet.publishedAt))
+								: Number(a.statistics.viewCount);
+						const second =
+							sortingBy === SortingBy.Date
+								? Number(new Date(b.snippet.publishedAt))
+								: Number(b.statistics.viewCount);
+						return first - second;
+					}),
+				);
+				break;
+			case SortingOrder.Descending:
+				this.searchResultsList$.next(
+					[...this.searchResultsList$.getValue()].sort((a, b) => {
+						const first: number =
+							sortingBy === SortingBy.Date
+								? Number(new Date(a.snippet.publishedAt))
+								: Number(a.statistics.viewCount);
+						const second =
+							sortingBy === SortingBy.Date
+								? Number(new Date(b.snippet.publishedAt))
+								: Number(b.statistics.viewCount);
+						return second - first;
+					}),
+				);
+				break;
+			default:
+				this.searchResultsList$.next([...this.searchResponse$.getValue().items]);
+				break;
+		}
+	}
 
-  sortByDate(): void {
-    if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
-      this.sortingByViews$.next(SortingOrder.Off);
-    }
+	sortByDate(): void {
+		if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
+			this.sortingByViews$.next(SortingOrder.Off);
+		}
 
-    SearchDataService.sort(this.sortingByDate$);
-  }
+		SearchDataService.sort(this.sortingByDate$);
+	}
 
-  sortByViews(): void {
-    if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
-      this.sortingByDate$.next(SortingOrder.Off);
-    }
+	sortByViews(): void {
+		if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
+			this.sortingByDate$.next(SortingOrder.Off);
+		}
 
-    SearchDataService.sort(this.sortingByViews$);
-  }
+		SearchDataService.sort(this.sortingByViews$);
+	}
 
-  setFilteringWord(word: string): void {
-    this.filterWord$.next(word);
-  }
+	setFilteringWord(word: string): void {
+		this.filterWord$.next(word);
+	}
 }

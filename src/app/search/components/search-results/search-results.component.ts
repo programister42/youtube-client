@@ -4,33 +4,33 @@ import { SearchDataService } from '../../services/search-data.service';
 import { SearchItemModel } from '../../../shared/models/search-item.model';
 
 @Component({
-  selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss'],
+	selector: 'app-search-results',
+	templateUrl: './search-results.component.html',
+	styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit {
-  isSearching: boolean = false;
+	isSearching: boolean = false;
 
-  searchResults!: SearchItemModel[];
+	searchResults!: SearchItemModel[];
 
-  filteringWord: string = '';
+	filteringWord: string = '';
 
-  constructor(
-    private searchMockupService: SearchMockupService,
-    private searchDataService: SearchDataService,
-  ) {}
+	constructor(
+		private searchMockupService: SearchMockupService,
+		private searchDataService: SearchDataService,
+	) {}
 
-  ngOnInit(): void {
-    this.searchMockupService.isSearching.subscribe((isSearching) => {
-      this.isSearching = isSearching;
-    });
+	ngOnInit(): void {
+		this.searchMockupService.isSearching.subscribe((isSearching) => {
+			this.isSearching = isSearching;
+		});
 
-    this.searchDataService.searchResultsList$.subscribe((results) => {
-      this.searchResults = results;
-    });
+		this.searchDataService.searchResultsList$.subscribe((results) => {
+			this.searchResults = results;
+		});
 
-    this.searchDataService.filterWord$.subscribe((word) => {
-      this.filteringWord = word;
-    });
-  }
+		this.searchDataService.filterWord$.subscribe((word) => {
+			this.filteringWord = word;
+		});
+	}
 }
