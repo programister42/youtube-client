@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'main', pathMatch: 'full' },
 	{
 		path: 'main',
 		loadChildren: () => import('./search/search.module').then((module) => module.SearchModule),
+		canLoad: [AuthGuard],
+		canActivate: [AuthGuard],
 	},
 	{
-		path: 'auth',
+		path: 'login',
 		loadChildren: () => import('./auth/auth.module').then((module) => module.AuthModule),
 	},
 	{ path: '**', component: NotFoundComponent },
+
+	//TODO: move Routing to Core
+
+	//TODO: implement main page
+
 	// { path: 'simple', component: SimpleRedicrectComponent },
 	// {
 	// 	path: 'user/:id',
