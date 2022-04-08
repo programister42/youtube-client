@@ -36,6 +36,12 @@ const materialModules = [
 		ChipIconDirective,
 	],
 	imports: [CommonModule, ...materialModules],
-	exports: [CardComponent, ...materialModules, FlexCenterDirective, ChipIconDirective],
+	exports: [
+		CardComponent,
+		...materialModules,
+		FlexCenterDirective,
+		ChipIconDirective,
+		PublicationColorDirective,
+	],
 })
 export class SharedModule {}

@@ -14,7 +14,7 @@ export class SearchMockupService {
 
 	search(searchValue: string): void {
 		this.searchValue$.next(searchValue);
-		this.router.navigate(['youtube/search/' + searchValue]);
+		this.router.navigate(['youtube/search/', searchValue]);
 	}
 
 	toggleFiltering(): void {

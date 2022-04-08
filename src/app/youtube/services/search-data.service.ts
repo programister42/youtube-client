@@ -75,6 +75,10 @@ export class SearchDataService {
 		this.filterWord$.next(word);
 	}
 
+	getItemById(id: string): SearchItemModel {
+		return this.searchResultsList$.getValue().find((item) => item.id === id)!;
+	}
+
 	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
 		switch (value) {
 			case SortingOrder.Ascending:
