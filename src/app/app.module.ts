@@ -5,11 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchModule } from './search/search.module';
+import { YoutubeModule } from './youtube/youtube.module';
 
 @NgModule({
 	declarations: [AppComponent],
-	imports: [BrowserModule, AppRoutingModule, CoreModule, BrowserAnimationsModule, SearchModule],
+	imports: [BrowserModule, AppRoutingModule, CoreModule, BrowserAnimationsModule, YoutubeModule],
 	providers: [],
 	bootstrap: [AppComponent],
 })

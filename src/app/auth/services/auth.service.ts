@@ -24,7 +24,7 @@ export class AuthService {
 	login(authValue: UserDataModel): void {
 		localStorage.setItem('token', JSON.stringify(authValue));
 		this.userData$.next(authValue);
-		this.router.navigate(['/main']);
+		this.router.navigate(['/youtube']);
 	}
 
 	logout(): void {

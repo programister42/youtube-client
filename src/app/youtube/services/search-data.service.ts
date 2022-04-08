@@ -55,6 +55,26 @@ export class SearchDataService {
 		}
 	}
 
+	sortByDate(): void {
+		if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
+			this.sortingByViews$.next(SortingOrder.Off);
+		}
+
+		SearchDataService.sort(this.sortingByDate$);
+	}
+
+	sortByViews(): void {
+		if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
+			this.sortingByDate$.next(SortingOrder.Off);
+		}
+
+		SearchDataService.sort(this.sortingByViews$);
+	}
+
+	setFilteringWord(word: string): void {
+		this.filterWord$.next(word);
+	}
+
 	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
 		switch (value) {
 			case SortingOrder.Ascending:
@@ -91,25 +111,5 @@ export class SearchDataService {
 				this.searchResultsList$.next([...this.searchResponse$.getValue().items]);
 				break;
 		}
-	}
-
-	sortByDate(): void {
-		if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
-			this.sortingByViews$.next(SortingOrder.Off);
-		}
-
-		SearchDataService.sort(this.sortingByDate$);
-	}
-
-	sortByViews(): void {
-		if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
-			this.sortingByDate$.next(SortingOrder.Off);
-		}
-
-		SearchDataService.sort(this.sortingByViews$);
-	}
-
-	setFilteringWord(word: string): void {
-		this.filterWord$.next(word);
 	}
 }

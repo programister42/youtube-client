@@ -11,12 +11,12 @@ export class AuthGuard implements CanActivate, CanLoad {
 
 	canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		if (!this.authService.checkLogin()) {
-			this.router.navigate(['/auth']);
+			this.router.navigate(['/login']);
 		}
 		return this.authService.checkLogin();
 	}
 
 	canLoad(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		return this.authService.checkLogin();
+		return this.canActivate();
 	}
 }

@@ -16,6 +16,6 @@ export class SearchBarComponent {
 
 	onSubmit(e: Event): void {
 		e.preventDefault();
-		this.searchService.setSearching(!!this.searchForm.value.searchInput);
+		this.searchService.search(this.searchForm.value.searchInput);
 	}
 }

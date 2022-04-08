@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchMockupService } from '../../services/search-mockup.service';
-import { SearchDataService } from '../../../search/services/search-data.service';
+import { SearchDataService } from '../../../youtube/services/search-data.service';
 import { SortingOrder } from '../../../shared/models/sorting-order';
 
 @Component({
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.searchMockupService.isFiltering.subscribe(
+		this.searchMockupService.isFiltering$.subscribe(
 			(isFiltering) => (this.isSorting = isFiltering),
 		);
 

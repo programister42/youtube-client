@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SearchMockupService {
-	isSearching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	searchValue$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-	isFiltering: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	isFiltering$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	setSearching(isSearching: boolean): void {
-		this.isSearching.next(isSearching);
+	constructor(private router: Router) {}
+
+	search(searchValue: string): void {
+		this.searchValue$.next(searchValue);
+		this.router.navigate(['youtube/search/' + searchValue]);
 	}
 
 	toggleFiltering(): void {
-		this.isFiltering.next(!this.isFiltering.value);
+		this.isFiltering$.next(!this.isFiltering$.value);
 	}
 }
