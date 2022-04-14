@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchMockupService } from '../../services/search-mockup.service';
+import { SearchBarService } from '../../services/search-mockup.service';
 import { SearchDataService } from '../../../youtube/services/search-data.service';
 import { SortingOrder } from '../../../shared/models/sorting-order';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -28,14 +28,14 @@ export class HeaderComponent implements OnInit {
 	userName: string = '';
 
 	constructor(
-		private searchMockupService: SearchMockupService,
+		private searchBarService: SearchBarService,
 		private searchDataService: SearchDataService,
 		private authService: AuthService,
 		private router: Router,
 	) {}
 
 	ngOnInit(): void {
-		this.searchMockupService.isFiltering$.subscribe(
+		this.searchBarService.isFiltering$.subscribe(
 			(isFiltering) => (this.isSorting = isFiltering),
 		);
 
@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	onFilterToggle(): void {
-		this.searchMockupService.toggleFiltering();
+		this.searchBarService.toggleFiltering();
 	}
 
 	sortByDate(): void {

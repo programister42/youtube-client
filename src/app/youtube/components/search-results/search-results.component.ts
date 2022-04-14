@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchMockupService } from '../../../core/services/search-mockup.service';
 import { SearchDataService } from '../../services/search-data.service';
 import { SearchItemModel } from '../../../shared/models/search-item.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-search-results',
@@ -16,11 +16,15 @@ export class SearchResultsComponent implements OnInit {
 	filteringWord: string = '';
 
 	constructor(
-		private searchMockupService: SearchMockupService,
 		private searchDataService: SearchDataService,
+		private activatedRoute: ActivatedRoute,
 	) {}
 
 	ngOnInit(): void {
+		this.activatedRoute.params.subscribe((params) => {
+			this.searchDataService.search(params['value']);
+		});
+
 		this.searchDataService.searchResultsList$.subscribe((results) => {
 			this.searchResults = results;
 		});

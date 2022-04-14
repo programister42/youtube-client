@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { SearchResponseModel } from '../../shared/models/search-response.model';
 import { SearchItemModel } from '../../shared/models/search-item.model';
-import response from '../response.json';
 import { SortingOrder } from '../../shared/models/sorting-order';
+import { HttpClient } from '@angular/common/http';
 
 enum SortingBy {
 	Date,
@@ -15,10 +15,10 @@ enum SortingBy {
 })
 export class SearchDataService {
 	searchResponse$: BehaviorSubject<SearchResponseModel> =
-		new BehaviorSubject<SearchResponseModel>(response);
+		new BehaviorSubject<SearchResponseModel>({} as SearchResponseModel);
 
 	searchResultsList$: BehaviorSubject<SearchItemModel[]> = new BehaviorSubject<SearchItemModel[]>(
-		this.searchResponse$.getValue().items,
+		{} as SearchItemModel[],
 	);
 
 	sortingByDate$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
@@ -31,7 +31,11 @@ export class SearchDataService {
 
 	filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-	constructor() {
+	constructor(private http: HttpClient) {
+		this.searchResponse$.subscribe((res) => {
+			this.searchResultsList$.next(res.items);
+		});
+
 		this.sortingByDate$.subscribe((value) => {
 			this.sortingCallback(value, SortingBy.Date);
 		});
@@ -55,6 +59,32 @@ export class SearchDataService {
 		}
 	}
 
+	search(searchWord: string): void {
+		this.http
+			.get<SearchResponseModel>(
+				'https://www.googleapis.com/youtube/v3/search?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8&type=video&maxResults=15&q=' +
+					searchWord,
+			)
+			.subscribe((response: SearchResponseModel) => {
+				this.http
+					.get<SearchResponseModel>(
+						'https://www.googleapis.com/youtube/v3/videos?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8&part=snippet,statistics&id=' +
+							response.items.map((item) => item.id.videoId).join(','),
+					)
+					.pipe(
+						map((res) => {
+							res.items.forEach((item, index) => {
+								Object.assign(item, response.items[index]);
+							});
+							return res;
+						}),
+					)
+					.subscribe((responesWithStats) => {
+						this.searchResponse$.next(responesWithStats);
+					});
+			});
+	}
+
 	sortByDate(): void {
 		if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
 			this.sortingByViews$.next(SortingOrder.Off);
@@ -76,7 +106,7 @@ export class SearchDataService {
 	}
 
 	getItemById(id: string): SearchItemModel {
-		return this.searchResultsList$.getValue().find((item) => item.id === id)!;
+		return this.searchResultsList$.getValue().find((item) => item.id.videoId === id)!;
 	}
 
 	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {

@@ -1,5 +1,5 @@
 <mat-card [appPublicationColor]='video.snippet.publishedAt' class='card'>
-	<img alt='Video thumbnails' mat-card-image src='{{video.snippet.thumbnails.standard.url}}'>
+	<img alt='Video thumbnails' mat-card-image src='{{video.snippet.thumbnails.medium.url}}'>
 	<mat-card-content appFlexCenter>
 		<mat-chip-list aria-label='Video statistics'>
 			<mat-chip>
@@ -13,12 +13,6 @@
 					<mat-icon appChipIcon aria-hidden='false' aria-label='Likes icon'>thumb_up</mat-icon>
 				</mat-chip-avatar>
 				{{video.statistics.likeCount}}
-			</mat-chip>
-			<mat-chip color='accent'>
-				<mat-chip-avatar>
-					<mat-icon appChipIcon aria-hidden='false' aria-label='Dislikes icon'>thumb_down</mat-icon>
-				</mat-chip-avatar>
-				{{video.statistics.dislikeCount}}
 			</mat-chip>
 			<mat-chip color='accent'>
 				<mat-chip-avatar>

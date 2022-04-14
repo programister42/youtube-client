@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 	styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-	@Input() video!: SearchItemModel;
+	@Input() video: SearchItemModel = {} as SearchItemModel;
 
 	constructor(private router: Router) {}
 
 	showInfo() {
-		this.router.navigate(['/youtube/video', this.video.id]);
+		this.router.navigate(['/youtube/video', this.video.id.videoId]);
 	}
 }

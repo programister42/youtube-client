@@ -6,7 +6,7 @@
 		<mat-card-title>{{video.snippet.title}}</mat-card-title>
 		<mat-card-subtitle>{{video.snippet.channelTitle}}</mat-card-subtitle>
 	</mat-card-header>
-	<img alt='Video thumbnails' mat-card-image src='{{video.snippet.thumbnails.maxres.url}}'>
+	<img alt='Video thumbnails' mat-card-image src='{{video.snippet.thumbnails.high.url}}'>
 	<mat-card-content>
 		<mat-chip-list aria-label='Video statistics'>
 			<mat-chip>
@@ -20,12 +20,6 @@
 					<mat-icon appChipIcon aria-hidden='false' aria-label='Likes icon'>thumb_up</mat-icon>
 				</mat-chip-avatar>
 				{{video.statistics.likeCount}}
-			</mat-chip>
-			<mat-chip color='accent'>
-				<mat-chip-avatar>
-					<mat-icon appChipIcon aria-hidden='false' aria-label='Dislikes icon'>thumb_down</mat-icon>
-				</mat-chip-avatar>
-				{{video.statistics.dislikeCount}}
 			</mat-chip>
 			<mat-chip color='accent'>
 				<mat-chip-avatar>

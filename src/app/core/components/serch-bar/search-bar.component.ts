@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, map, Observable } from 'rxjs';
-import { SearchMockupService } from '../../services/search-mockup.service';
+import { SearchBarService } from '../../services/search-mockup.service';
 
 @Component({
 	selector: 'app-search-bar',
@@ -20,7 +20,7 @@ export class SearchBarComponent implements OnInit {
 		distinctUntilChanged(),
 	);
 
-	constructor(private searchService: SearchMockupService) {
+	constructor(private searchService: SearchBarService) {
 		this.searchStream$.subscribe((value) => {
 			console.log(value);
 		});
