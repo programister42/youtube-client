@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SearchMockupService } from '../../services/search-mockup.service';
 import { SearchDataService } from '../../../youtube/services/search-data.service';
 import { SortingOrder } from '../../../shared/models/sorting-order';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-header',
@@ -21,9 +23,15 @@ export class HeaderComponent implements OnInit {
 
 	isFilteringByWord: boolean = false;
 
+	isLoggedIn: boolean = false;
+
+	userName: string = '';
+
 	constructor(
 		private searchMockupService: SearchMockupService,
 		private searchDataService: SearchDataService,
+		private authService: AuthService,
+		private router: Router,
 	) {}
 
 	ngOnInit(): void {
@@ -42,6 +50,14 @@ export class HeaderComponent implements OnInit {
 		this.searchDataService.filterWord$.subscribe(
 			(filterWord) => (this.isFilteringByWord = filterWord !== ''),
 		);
+
+		this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+			this.isLoggedIn = isLoggedIn;
+		});
+
+		this.authService.userLogin$.subscribe((userName) => {
+			this.userName = userName;
+		});
 	}
 
 	onFilterToggle(): void {
@@ -58,5 +74,10 @@ export class HeaderComponent implements OnInit {
 
 	filterByWord(): void {
 		this.searchDataService.setFilteringWord(this.filterWord);
+	}
+
+	redirectToLogin(): void {
+		if (this.isLoggedIn) this.authService.logout();
+		this.router.navigate(['/login']);
 	}
 }

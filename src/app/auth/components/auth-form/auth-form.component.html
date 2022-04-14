@@ -21,7 +21,8 @@
 	<button [disabled]="!authForm.valid"
 			color="primary"
 			mat-raised-button
-			type="submit">
+			type="submit"
+			(click)="onSubmit()">
 		Login
 	</button>
 </form>

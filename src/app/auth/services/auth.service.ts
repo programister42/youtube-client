@@ -13,6 +13,8 @@ export class AuthService {
 
 	userLogin$: Observable<string> = this.userData$.pipe(map((user: UserDataModel) => user.login));
 
+	isLoggedIn$: Observable<boolean> = this.userLogin$.pipe(map((login) => !!login));
+
 	constructor(private router: Router) {
 		if (localStorage.getItem('token')) {
 			this.userData$.next(
