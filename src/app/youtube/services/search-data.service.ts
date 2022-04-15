@@ -61,20 +61,17 @@ export class SearchDataService {
 
 	search(searchWord: string): void {
 		this.http
-			.get<SearchResponseModel>(
-				'https://www.googleapis.com/youtube/v3/search?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8',
-				{
-					params: {
-						type: 'video',
-						maxResults: 15,
-						q: searchWord,
-					},
+			.get<SearchResponseModel>('search?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8', {
+				params: {
+					type: 'video',
+					maxResults: 15,
+					q: searchWord,
 				},
-			)
+			})
 			.subscribe((response: SearchResponseModel) => {
 				this.http
 					.get<SearchResponseModel>(
-						'https://www.googleapis.com/youtube/v3/videos?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8',
+						'videos?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8',
 						{
 							params: {
 								part: 'snippet,statistics',
