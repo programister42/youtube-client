@@ -61,7 +61,7 @@ export class SearchDataService {
 
 	search(searchWord: string): void {
 		this.http
-			.get<SearchResponseModel>('search?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8', {
+			.get<SearchResponseModel>('search', {
 				params: {
 					type: 'video',
 					maxResults: 15,
@@ -70,15 +70,12 @@ export class SearchDataService {
 			})
 			.subscribe((response: SearchResponseModel) => {
 				this.http
-					.get<SearchResponseModel>(
-						'videos?key=AIzaSyBxf75tVokHfZl0fOd8OliwF114E535uB8',
-						{
-							params: {
-								part: 'snippet,statistics',
-								id: response.items.map((item) => item.id.videoId).join(','),
-							},
+					.get<SearchResponseModel>('videos', {
+						params: {
+							part: 'snippet,statistics',
+							id: response.items.map((item) => item.id.videoId).join(','),
 						},
-					)
+					})
 					.pipe(
 						map((res) => {
 							res.items.forEach((item, index) => {
