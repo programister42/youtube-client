@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SearchResultsComponent implements OnInit {
 	isSearching: boolean = false;
 
-	searchResults!: SearchItemModel[];
+	searchResults: SearchItemModel[] | undefined;
 
 	filteringWord: string = '';
 

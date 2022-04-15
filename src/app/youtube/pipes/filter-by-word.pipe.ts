@@ -5,7 +5,8 @@ import { SearchItemModel } from '../../shared/models/search-item.model';
 	name: 'filterByWord',
 })
 export class FilterByWordPipe implements PipeTransform {
-	transform(value: SearchItemModel[], word: string): SearchItemModel[] {
+	transform(value: SearchItemModel[] | undefined, word: string): SearchItemModel[] | undefined {
+		if (!value) return;
 		return value.filter((video) => {
 			return (
 				video.snippet.title.toLocaleLowerCase().includes(word.toLocaleLowerCase()) ||
