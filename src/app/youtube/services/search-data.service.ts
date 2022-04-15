@@ -115,6 +115,7 @@ export class SearchDataService {
 	}
 
 	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
+		if (!this.searchResultsList$.getValue()) return;
 		switch (value) {
 			case SortingOrder.Ascending:
 				this.searchResultsList$.next(
