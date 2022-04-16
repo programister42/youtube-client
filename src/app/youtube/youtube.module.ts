@@ -8,6 +8,8 @@ import { RecommendationsPageComponent } from './pages/recommendations-page/recom
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { DetailedInformationPageComponent } from './pages/detailed-information-page/detailed-information-page.component';
 import { DetailedCardComponent } from './components/detailed-card/detailed-card.component';
+import { SortByDatePipe } from './pipes/sort-by-date.pipe';
+import { SortByViewsPipe } from './pipes/sort-by-views.pipe';
 
 const routes: Routes = [
 	{ path: '', component: RecommendationsPageComponent },
@@ -23,6 +25,8 @@ const routes: Routes = [
 		SearchPageComponent,
 		DetailedInformationPageComponent,
 		DetailedCardComponent,
+		SortByDatePipe,
+		SortByViewsPipe,
 	],
 	imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
 })
