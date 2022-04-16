@@ -1,4 +1,4 @@
-import { SearchItemModel } from './search-item.model';
+import { SearchItemModel, StatsItemModel } from './search-item.model';
 
 export interface SearchResponseModel {
 	kind: string;
@@ -10,4 +10,14 @@ export interface SearchResponseModel {
 		resultsPerPage: number;
 	};
 	items: SearchItemModel[];
+}
+
+export interface StatsResponseModel {
+	etag: string;
+	items: StatsItemModel[];
+	kind: string;
+	pageInfo: {
+		totalResults: number;
+		resultsPerPage: number;
+	};
 }

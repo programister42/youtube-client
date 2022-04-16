@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SearchItemModel } from 'src/app/shared/models/search-item.model';
+import { StatsItemModel } from 'src/app/shared/models/search-item.model';
 import { SortingOrder } from 'src/app/shared/models/sorting-order';
 
 @Pipe({
@@ -7,9 +7,9 @@ import { SortingOrder } from 'src/app/shared/models/sorting-order';
 })
 export class SortByViewsPipe implements PipeTransform {
 	transform(
-		value: SearchItemModel[] | undefined,
+		value: StatsItemModel[] | undefined,
 		sortingOrder: SortingOrder,
-	): SearchItemModel[] | undefined {
+	): StatsItemModel[] | undefined {
 		if (!value) return;
 		return [...value].sort((a, b) => {
 			const first: number = Number(a.statistics.viewCount);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchDataService } from '../../services/search-data.service';
-import { SearchItemModel } from '../../../shared/models/search-item.model';
+import { StatsItemModel } from '../../../shared/models/search-item.model';
 import { ActivatedRoute } from '@angular/router';
 import { SortingOrder } from 'src/app/shared/models/sorting-order';
 
@@ -12,7 +12,7 @@ import { SortingOrder } from 'src/app/shared/models/sorting-order';
 export class SearchResultsComponent implements OnInit {
 	isSearching: boolean = false;
 
-	searchResults: SearchItemModel[] | undefined;
+	searchResults: StatsItemModel[] | undefined;
 
 	filteringWord: string = '';
 

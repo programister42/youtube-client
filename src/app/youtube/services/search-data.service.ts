@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
-import { SearchResponseModel } from '../../shared/models/search-response.model';
-import { SearchItemModel } from '../../shared/models/search-item.model';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { SearchResponseModel, StatsResponseModel } from '../../shared/models/search-response.model';
+import { StatsItemModel } from '../../shared/models/search-item.model';
 import { SortingOrder } from '../../shared/models/sorting-order';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,8 +12,8 @@ export class SearchDataService {
 	private searchResponse$: BehaviorSubject<SearchResponseModel> =
 		new BehaviorSubject<SearchResponseModel>({} as SearchResponseModel);
 
-	searchResultsList$: BehaviorSubject<SearchItemModel[]> = new BehaviorSubject<SearchItemModel[]>(
-		{} as SearchItemModel[],
+	searchResultsList$: BehaviorSubject<StatsItemModel[]> = new BehaviorSubject<StatsItemModel[]>(
+		[] as StatsItemModel[],
 	);
 
 	sortingByDate$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
@@ -26,11 +26,7 @@ export class SearchDataService {
 
 	filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-	constructor(private http: HttpClient) {
-		this.searchResponse$.subscribe((res) => {
-			this.searchResultsList$.next(res.items);
-		});
-	}
+	constructor(private http: HttpClient) {}
 
 	private static sortByOrder(subject: BehaviorSubject<SortingOrder>): void {
 		switch (subject.getValue()) {
@@ -55,25 +51,18 @@ export class SearchDataService {
 					q: searchWord,
 				},
 			})
-			.subscribe((response: SearchResponseModel) => {
-				this.http
-					.get<SearchResponseModel>('videos', {
+			.pipe(
+				switchMap((response) =>
+					this.http.get<StatsResponseModel>('videos', {
 						params: {
 							part: 'snippet,statistics',
 							id: response.items.map((item) => item.id.videoId).join(','),
 						},
-					})
-					.pipe(
-						map((res) => {
-							res.items.forEach((item, index) => {
-								Object.assign(item, response.items[index]);
-							});
-							return res;
-						}),
-					)
-					.subscribe((responesWithStats) => {
-						this.searchResponse$.next(responesWithStats);
-					});
+					}),
+				),
+			)
+			.subscribe((responesWithStats) => {
+				this.searchResultsList$.next(responesWithStats.items);
 			});
 	}
 
@@ -95,7 +84,7 @@ export class SearchDataService {
 		this.filterWord$.next(word);
 	}
 
-	getItemById(id: string): SearchItemModel {
-		return this.searchResultsList$.getValue().find((item) => item.id.videoId === id)!;
+	getItemById(id: string): StatsItemModel {
+		return this.searchResultsList$.getValue().find((item) => item.id === id)!;
 	}
 }

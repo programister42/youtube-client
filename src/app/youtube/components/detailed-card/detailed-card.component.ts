@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SearchDataService } from '../../services/search-data.service';
-import { SearchItemModel } from '../../../shared/models/search-item.model';
+import { StatsItemModel } from '../../../shared/models/search-item.model';
 
 @Component({
 	selector: 'app-detailed-card',
@@ -10,7 +10,7 @@ import { SearchItemModel } from '../../../shared/models/search-item.model';
 	styleUrls: ['./detailed-card.component.scss'],
 })
 export class DetailedCardComponent implements OnInit {
-	video!: SearchItemModel;
+	video!: StatsItemModel;
 
 	constructor(
 		private searchDataService: SearchDataService,

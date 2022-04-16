@@ -44,6 +44,12 @@ export interface SearchItemModel {
 	kind: string;
 	etag: string;
 	id: Id;
+}
+
+export interface StatsItemModel {
+	etag: string;
+	id: string;
+	kind: string;
 	snippet: Snippet;
 	statistics: Statistics;
 }

@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SearchItemModel } from '../../shared/models/search-item.model';
+import { StatsItemModel } from '../../shared/models/search-item.model';
 
 @Pipe({
 	name: 'filterByWord',
 })
 export class FilterByWordPipe implements PipeTransform {
-	transform(value: SearchItemModel[] | undefined, word: string): SearchItemModel[] | undefined {
+	transform(value: StatsItemModel[] | undefined, word: string): StatsItemModel[] | undefined {
 		if (!value) return;
 		return value.filter((video) => {
 			return (
