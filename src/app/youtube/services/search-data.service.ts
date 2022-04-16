@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { SearchResponseModel, StatsResponseModel } from '../../shared/models/search-response.model';
 import { StatsItemModel } from '../../shared/models/search-item.model';
 import { SortingOrder } from '../../shared/models/sorting-order';
@@ -42,8 +42,8 @@ export class SearchDataService {
 		}
 	}
 
-	search(searchWord: string): void {
-		this.http
+	search(searchWord: string): Observable<StatsItemModel[]> {
+		return this.http
 			.get<SearchResponseModel>('search', {
 				params: {
 					type: 'video',
@@ -53,17 +53,16 @@ export class SearchDataService {
 			})
 			.pipe(
 				switchMap((response) =>
-					this.http.get<StatsResponseModel>('videos', {
-						params: {
-							part: 'snippet,statistics',
-							id: response.items.map((item) => item.id.videoId).join(','),
-						},
-					}),
+					this.http
+						.get<StatsResponseModel>('videos', {
+							params: {
+								part: 'snippet,statistics',
+								id: response.items.map((item) => item.id.videoId).join(','),
+							},
+						})
+						.pipe(map((statsResponse) => statsResponse.items)),
 				),
-			)
-			.subscribe((responesWithStats) => {
-				this.searchResultsList$.next(responesWithStats.items);
-			});
+			);
 	}
 
 	sortByDate(): void {
