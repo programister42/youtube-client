@@ -53,16 +53,20 @@ export class SearchDataService {
 			})
 			.pipe(
 				switchMap((response) =>
-					this.http
-						.get<StatsResponseModel>('videos', {
-							params: {
-								part: 'snippet,statistics',
-								id: response.items.map((item) => item.id.videoId).join(','),
-							},
-						})
-						.pipe(map((statsResponse) => statsResponse.items)),
+					this.getVideo(...response.items.map((item) => item.id.videoId)),
 				),
 			);
+	}
+
+	getVideo(...id: string[]): Observable<StatsItemModel[]> {
+		return this.http
+			.get<StatsResponseModel>('videos', {
+				params: {
+					part: 'snippet,statistics',
+					id: id.join(','),
+				},
+			})
+			.pipe(map((statsResponse) => statsResponse.items));
 	}
 
 	sortByDate(): void {

@@ -27,12 +27,6 @@ export class SearchResultsComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.activatedRoute.params.subscribe((params) => {
-			this.searchDataService.search(params['value']).subscribe((results) => {
-				this.searchResults = results;
-			});
-		});
-
 		this.activatedRoute.params
 			.pipe(switchMap((params) => this.searchDataService.search(params['value'])))
 			.subscribe((results) => {

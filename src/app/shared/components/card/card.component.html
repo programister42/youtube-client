@@ -1,34 +1,40 @@
-<mat-card [appPublicationColor]='video.snippet.publishedAt' class='card'>
-	<img alt='Video thumbnails' mat-card-image src='{{video.snippet.thumbnails.medium.url}}'>
+<mat-card [appPublicationColor]="video.snippet.publishedAt" class="card">
+	<img alt="Video thumbnails" mat-card-image src="{{ video.snippet.thumbnails.medium.url }}" />
 	<mat-card-content appFlexCenter>
-		<mat-chip-list aria-label='Video statistics'>
+		<mat-chip-list aria-label="Video statistics">
 			<mat-chip>
 				<mat-chip-avatar>
-					<mat-icon appChipIcon aria-hidden='false' aria-label='Views icon'>visibility</mat-icon>
+					<mat-icon appChipIcon aria-hidden="false" aria-label="Views icon"
+						>visibility</mat-icon
+					>
 				</mat-chip-avatar>
-				{{video.statistics.viewCount}}
+				{{ video.statistics.viewCount }}
 			</mat-chip>
-			<mat-chip color='primary'>
+			<mat-chip color="primary">
 				<mat-chip-avatar>
-					<mat-icon appChipIcon aria-hidden='false' aria-label='Likes icon'>thumb_up</mat-icon>
+					<mat-icon appChipIcon aria-hidden="false" aria-label="Likes icon"
+						>thumb_up</mat-icon
+					>
 				</mat-chip-avatar>
-				{{video.statistics.likeCount}}
+				{{ video.statistics.likeCount }}
 			</mat-chip>
-			<mat-chip color='accent'>
+			<mat-chip color="accent">
 				<mat-chip-avatar>
-					<mat-icon appChipIcon aria-hidden='false' aria-label='Comments icon'>comment</mat-icon>
+					<mat-icon appChipIcon aria-hidden="false" aria-label="Comments icon"
+						>comment</mat-icon
+					>
 				</mat-chip-avatar>
-				{{video.statistics.commentCount}}
+				{{ video.statistics.commentCount }}
 			</mat-chip>
 		</mat-chip-list>
 	</mat-card-content>
 	<mat-card-header>
 		<!--    <div mat-card-avatar class="example-header-image"></div>-->
-		<mat-card-title>{{video.snippet.title}}</mat-card-title>
-		<mat-card-subtitle>{{video.snippet.channelTitle}}</mat-card-subtitle>
+		<mat-card-title>{{ video.snippet.title }}</mat-card-title>
+		<mat-card-subtitle>{{ video.snippet.channelTitle }}</mat-card-subtitle>
 	</mat-card-header>
-	<mat-divider class='end' inset></mat-divider>
+	<mat-divider class="end" inset></mat-divider>
 	<mat-card-actions appFlexCenter>
-		<button (click)="showInfo()" class='wide-button' mat-button>More...</button>
+		<button (click)="showInfo()" class="wide-button" mat-button>More...</button>
 	</mat-card-actions>
 </mat-card>
