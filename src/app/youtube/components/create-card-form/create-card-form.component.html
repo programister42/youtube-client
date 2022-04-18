@@ -33,7 +33,7 @@
 	</mat-form-field>
 
 	<mat-form-field appearance="outline" color="accent">
-		<mat-label>Enter a link to the image</mat-label>
+		<mat-label>Enter a link to the video</mat-label>
 		<input formControlName="videoUrl" matInput />
 		<mat-error appErrorHint *ngIf="newCardForm.get('videoUrl')?.hasError('required')"
 			>Please enter a link to the video</mat-error
