@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { UserDataModel } from '../models/user-data.model';
 
 @Component({
@@ -9,16 +8,16 @@ import { UserDataModel } from '../models/user-data.model';
 	styleUrls: ['./auth-form.component.scss'],
 })
 export class AuthFormComponent {
+	@Output() login: EventEmitter<UserDataModel> = new EventEmitter<UserDataModel>();
+
 	hidePassword: boolean = true;
 
 	authForm: FormGroup = new FormGroup({
-		login: new FormControl('', Validators.required),
+		login: new FormControl('', [Validators.required, Validators.email]),
 		password: new FormControl('', Validators.required),
 	});
 
-	constructor(private authService: AuthService) {}
-
 	onSubmit() {
-		this.authService.login(this.authForm.value as UserDataModel);
+		this.login.emit(this.authForm.value as UserDataModel);
 	}
 }

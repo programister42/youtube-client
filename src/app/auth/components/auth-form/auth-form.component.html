@@ -2,8 +2,9 @@
 	  [formGroup]="authForm"
 	  class="auth-form">
 	<mat-form-field appearance="fill" color="accent">
-		<mat-label>Sign In</mat-label>
+		<mat-label>Please enter a login email</mat-label>
 		<input formControlName="login" matInput>
+		<mat-error>The login email is invalid</mat-error>
 	</mat-form-field>
 	<mat-form-field appearance="fill" color="accent">
 		<mat-label>Password</mat-label>
