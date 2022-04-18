@@ -14,7 +14,7 @@ export class AuthFormComponent {
 
 	authForm: FormGroup = new FormGroup({
 		login: new FormControl('', [Validators.required, Validators.email]),
-		password: new FormControl('', Validators.required),
+		password: new FormControl('', [Validators.required]),
 	});
 
 	onSubmit() {

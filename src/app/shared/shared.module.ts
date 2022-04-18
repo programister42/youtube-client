@@ -12,8 +12,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatListModule } from '@angular/material/list';
 import { PublicationColorDirective } from './directives/publication-color.directive';
 import { ChipIconDirective } from './directives/chip-icon.directive';
+import { PasswordValidatorDirective } from './directives/password-validator.directive';
 
 const materialModules = [
 	MatCardModule,
@@ -26,6 +28,7 @@ const materialModules = [
 	MatGridListModule,
 	MatDividerModule,
 	MatProgressBarModule,
+	MatListModule,
 ];
 
 @NgModule({
@@ -34,6 +37,7 @@ const materialModules = [
 		FlexCenterDirective,
 		PublicationColorDirective,
 		ChipIconDirective,
+		PasswordValidatorDirective,
 	],
 	imports: [CommonModule, ...materialModules],
 	exports: [
@@ -42,6 +46,7 @@ const materialModules = [
 		FlexCenterDirective,
 		ChipIconDirective,
 		PublicationColorDirective,
+		PasswordValidatorDirective,
 	],
 })
 export class SharedModule {}

@@ -1,4 +1,11 @@
 .auth-form {
 	display: flex;
 	flex-direction: column;
+
+	.error {
+		padding: .25rem;
+		border: 1px solid #f44336;
+		border-radius: 4px;
+		background-color: rgba($color: #fff, $alpha: 0.8);
+	}
 }
