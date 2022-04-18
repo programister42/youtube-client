@@ -13,9 +13,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { PublicationColorDirective } from './directives/publication-color.directive';
 import { ChipIconDirective } from './directives/chip-icon.directive';
-import { PasswordValidatorDirective } from './directives/password-validator.directive';
+import { PasswordValidatorDirective } from './validators/password-validator.directive';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ErrorHintDirective } from './directives/error-hint.directive';
 
 const materialModules = [
 	MatCardModule,
@@ -29,6 +33,8 @@ const materialModules = [
 	MatDividerModule,
 	MatProgressBarModule,
 	MatListModule,
+	MatDatepickerModule,
+	MatNativeDateModule,
 ];
 
 @NgModule({
@@ -38,8 +44,9 @@ const materialModules = [
 		PublicationColorDirective,
 		ChipIconDirective,
 		PasswordValidatorDirective,
+		ErrorHintDirective,
 	],
-	imports: [CommonModule, ...materialModules],
+	imports: [CommonModule, ...materialModules, ReactiveFormsModule],
 	exports: [
 		CardComponent,
 		...materialModules,
@@ -47,6 +54,8 @@ const materialModules = [
 		ChipIconDirective,
 		PublicationColorDirective,
 		PasswordValidatorDirective,
+		ErrorHintDirective,
+		ReactiveFormsModule,
 	],
 })
 export class SharedModule {}

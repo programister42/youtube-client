@@ -2,7 +2,7 @@
 	<mat-form-field appearance="fill" color="accent">
 		<mat-label>Please enter a login email</mat-label>
 		<input formControlName="login" matInput />
-		<mat-error class="error">The login email is invalid</mat-error>
+		<mat-error appErrorHint>The login email is invalid</mat-error>
 	</mat-form-field>
 	<mat-form-field appearance="fill" color="accent">
 		<mat-label>Please enter a password</mat-label>
@@ -22,7 +22,7 @@
 		>
 			<mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
 		</button>
-		<mat-error class="error">
+		<mat-error appErrorHint>
 			Your password isn't strong enough (at least 8 characters, a mixture of both uppercase
 			and lowercase letters, a mixture of letters and numbers, inclusion of at least one
 			special character, e.g., ! @ # ?)
@@ -31,7 +31,7 @@
 	<button
 		[disabled]="!authForm.valid"
 		color="primary"
-		mat-raised-button
+		mat-flat-button
 		type="submit"
 		(click)="onSubmit()"
 	>
