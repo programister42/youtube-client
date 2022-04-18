@@ -9,9 +9,6 @@ import { HttpClient } from '@angular/common/http';
 	providedIn: 'root',
 })
 export class SearchDataService {
-	private searchResponse$: BehaviorSubject<SearchResponseModel> =
-		new BehaviorSubject<SearchResponseModel>({} as SearchResponseModel);
-
 	searchResultsList$: BehaviorSubject<StatsItemModel[]> = new BehaviorSubject<StatsItemModel[]>(
 		[] as StatsItemModel[],
 	);

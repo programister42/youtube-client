@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, map, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, Observable, Subscription } from 'rxjs';
 import { SearchBarService } from '../../services/search-mockup.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { SearchBarService } from '../../services/search-mockup.service';
 	templateUrl: './search-bar.component.html',
 	styleUrls: ['./search-bar.component.scss'],
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
 	searchForm: FormGroup = new FormGroup({
 		searchInput: new FormControl(''),
 	});
@@ -20,16 +20,18 @@ export class SearchBarComponent implements OnInit {
 		distinctUntilChanged(),
 	);
 
-	constructor(private searchService: SearchBarService) {
-		this.searchStream$.subscribe((value) => {
-			console.log(value);
+	searchStreamSubscription!: Subscription;
+
+	constructor(private searchService: SearchBarService) {}
+
+	ngOnInit(): void {
+		this.searchStreamSubscription = this.searchStream$.subscribe((value) => {
+			this.searchService.search(value);
 		});
 	}
 
-	ngOnInit(): void {
-		this.searchStream$.subscribe((value) => {
-			this.searchService.search(value);
-		});
+	ngOnDestroy(): void {
+		this.searchStreamSubscription.unsubscribe();
 	}
 
 	onSubmit(e: Event): void {

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SearchDataService } from '../../services/search-data.service';
-import { switchMap } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-detailed-card',
 	templateUrl: './detailed-card.component.html',
 	styleUrls: ['./detailed-card.component.scss'],
 })
-export class DetailedCardComponent implements OnInit {
+export class DetailedCardComponent implements OnInit, OnDestroy {
 	publishedAt: string = '';
 
 	title: string = '';
@@ -26,6 +26,8 @@ export class DetailedCardComponent implements OnInit {
 
 	description: string = '';
 
+	activatedRouteSubscription!: Subscription;
+
 	constructor(
 		private searchDataService: SearchDataService,
 		private activatedRoute: ActivatedRoute,
@@ -33,7 +35,7 @@ export class DetailedCardComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.activatedRoute.params
+		this.activatedRouteSubscription = this.activatedRoute.params
 			.pipe(switchMap((params) => this.searchDataService.getVideo(params['id'])))
 			.subscribe(([result]) => {
 				this.publishedAt = result.snippet.publishedAt;
@@ -45,6 +47,10 @@ export class DetailedCardComponent implements OnInit {
 				this.commentCount = result.statistics.commentCount;
 				this.description = result.snippet.description;
 			});
+	}
+
+	ngOnDestroy(): void {
+		this.activatedRouteSubscription.unsubscribe();
 	}
 
 	goBack(): void {
