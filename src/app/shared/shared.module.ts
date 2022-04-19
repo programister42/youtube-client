@@ -16,21 +16,32 @@ import { PublicationColorDirective } from './directives/publication-color.direct
 import { ChipIconDirective } from './directives/chip-icon.directive';
 
 const materialModules = [
-  MatCardModule,
-  MatToolbarModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatButtonModule,
-  MatChipsModule,
-  MatGridListModule,
-  MatDividerModule,
-  MatProgressBarModule,
+	MatCardModule,
+	MatToolbarModule,
+	MatFormFieldModule,
+	MatIconModule,
+	MatInputModule,
+	MatButtonModule,
+	MatChipsModule,
+	MatGridListModule,
+	MatDividerModule,
+	MatProgressBarModule,
 ];
 
 @NgModule({
-  declarations: [CardComponent, FlexCenterDirective, PublicationColorDirective, ChipIconDirective],
-  imports: [CommonModule, ...materialModules],
-  exports: [CardComponent, ...materialModules, FlexCenterDirective, ChipIconDirective],
+	declarations: [
+		CardComponent,
+		FlexCenterDirective,
+		PublicationColorDirective,
+		ChipIconDirective,
+	],
+	imports: [CommonModule, ...materialModules],
+	exports: [
+		CardComponent,
+		...materialModules,
+		FlexCenterDirective,
+		ChipIconDirective,
+		PublicationColorDirective,
+	],
 })
 export class SharedModule {}
