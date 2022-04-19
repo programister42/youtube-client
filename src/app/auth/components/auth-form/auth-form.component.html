@@ -1,27 +1,40 @@
-<form (ngSubmit)="onSubmit()"
-	  [formGroup]="authForm"
-	  class="auth-form">
+<form (ngSubmit)="onSubmit()" [formGroup]="authForm" class="auth-form">
 	<mat-form-field appearance="fill" color="accent">
-		<mat-label>Sign In</mat-label>
-		<input formControlName="login" matInput>
+		<mat-label>Please enter a login email</mat-label>
+		<input formControlName="login" matInput />
+		<mat-error appErrorHint>The login email is invalid</mat-error>
 	</mat-form-field>
 	<mat-form-field appearance="fill" color="accent">
-		<mat-label>Password</mat-label>
-		<input [type]="hidePassword ? 'password' : 'text'"
-			   formControlName="password"
-			   matInput>
-		<button (click)="hidePassword = !hidePassword"
-				[attr.aria-label]="'Hide password'"
-				[attr.aria-pressed]="hidePassword"
-				mat-icon-button matSuffix
-				type="button">
-			<mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+		<mat-label>Please enter a password</mat-label>
+		<input
+			[type]="hidePassword ? 'password' : 'text'"
+			formControlName="password"
+			matInput
+			appPasswordValidator
+		/>
+		<button
+			(click)="hidePassword = !hidePassword"
+			[attr.aria-label]="'Hide password'"
+			[attr.aria-pressed]="hidePassword"
+			mat-icon-button
+			matSuffix
+			type="button"
+		>
+			<mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
 		</button>
+		<mat-error appErrorHint>
+			Your password isn't strong enough (at least 8 characters, a mixture of both uppercase
+			and lowercase letters, a mixture of letters and numbers, inclusion of at least one
+			special character, e.g., ! @ # ?)
+		</mat-error>
 	</mat-form-field>
-	<button [disabled]="!authForm.valid"
-			color="primary"
-			mat-raised-button
-			type="submit">
+	<button
+		[disabled]="!authForm.valid"
+		color="primary"
+		mat-flat-button
+		type="submit"
+		(click)="onSubmit()"
+	>
 		Login
 	</button>
 </form>

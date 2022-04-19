@@ -1,24 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { SearchResponseModel } from '../../shared/models/search-response.model';
-import { SearchItemModel } from '../../shared/models/search-item.model';
-import response from '../response.json';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
+import { SearchResponseModel, StatsResponseModel } from '../../shared/models/search-response.model';
+import { StatsItemModel } from '../../shared/models/search-item.model';
 import { SortingOrder } from '../../shared/models/sorting-order';
-
-enum SortingBy {
-	Date,
-	Views,
-}
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SearchDataService {
-	searchResponse$: BehaviorSubject<SearchResponseModel> =
-		new BehaviorSubject<SearchResponseModel>(response);
-
-	searchResultsList$: BehaviorSubject<SearchItemModel[]> = new BehaviorSubject<SearchItemModel[]>(
-		this.searchResponse$.getValue().items,
+	searchResultsList$: BehaviorSubject<StatsItemModel[]> = new BehaviorSubject<StatsItemModel[]>(
+		[] as StatsItemModel[],
 	);
 
 	sortingByDate$: BehaviorSubject<SortingOrder> = new BehaviorSubject<SortingOrder>(
@@ -31,17 +23,9 @@ export class SearchDataService {
 
 	filterWord$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-	constructor() {
-		this.sortingByDate$.subscribe((value) => {
-			this.sortingCallback(value, SortingBy.Date);
-		});
+	constructor(private http: HttpClient) {}
 
-		this.sortingByViews$.subscribe((value) => {
-			this.sortingCallback(value, SortingBy.Views);
-		});
-	}
-
-	private static sort(subject: BehaviorSubject<SortingOrder>): void {
+	private static sortByOrder(subject: BehaviorSubject<SortingOrder>): void {
 		switch (subject.getValue()) {
 			case SortingOrder.Descending:
 				subject.next(SortingOrder.Ascending);
@@ -55,65 +39,52 @@ export class SearchDataService {
 		}
 	}
 
-	sortByDate(): void {
-		if (this.sortingByViews$.getValue() !== SortingOrder.Off) {
-			this.sortingByViews$.next(SortingOrder.Off);
-		}
+	search(searchWord: string): Observable<StatsItemModel[]> {
+		return this.http
+			.get<SearchResponseModel>('search', {
+				params: {
+					type: 'video',
+					maxResults: 15,
+					q: searchWord,
+				},
+			})
+			.pipe(
+				switchMap((response) =>
+					this.getVideo(...response.items.map((item) => item.id.videoId)),
+				),
+			);
+	}
 
-		SearchDataService.sort(this.sortingByDate$);
+	getVideo(...id: string[]): Observable<StatsItemModel[]> {
+		return this.http
+			.get<StatsResponseModel>('videos', {
+				params: {
+					part: 'snippet,statistics',
+					id: id.join(','),
+				},
+			})
+			.pipe(map((statsResponse) => statsResponse.items));
+	}
+
+	sortByDate(): void {
+		if (this.sortingByViews$.getValue() !== SortingOrder.Off)
+			this.sortingByViews$.next(SortingOrder.Off);
+
+		SearchDataService.sortByOrder(this.sortingByDate$);
 	}
 
 	sortByViews(): void {
-		if (this.sortingByDate$.getValue() !== SortingOrder.Off) {
+		if (this.sortingByDate$.getValue() !== SortingOrder.Off)
 			this.sortingByDate$.next(SortingOrder.Off);
-		}
 
-		SearchDataService.sort(this.sortingByViews$);
+		SearchDataService.sortByOrder(this.sortingByViews$);
 	}
 
 	setFilteringWord(word: string): void {
 		this.filterWord$.next(word);
 	}
 
-	getItemById(id: string): SearchItemModel {
+	getItemById(id: string): StatsItemModel {
 		return this.searchResultsList$.getValue().find((item) => item.id === id)!;
-	}
-
-	private sortingCallback(value: SortingOrder, sortingBy: SortingBy): void {
-		switch (value) {
-			case SortingOrder.Ascending:
-				this.searchResultsList$.next(
-					[...this.searchResultsList$.getValue()].sort((a, b) => {
-						const first: number =
-							sortingBy === SortingBy.Date
-								? Number(new Date(a.snippet.publishedAt))
-								: Number(a.statistics.viewCount);
-						const second =
-							sortingBy === SortingBy.Date
-								? Number(new Date(b.snippet.publishedAt))
-								: Number(b.statistics.viewCount);
-						return first - second;
-					}),
-				);
-				break;
-			case SortingOrder.Descending:
-				this.searchResultsList$.next(
-					[...this.searchResultsList$.getValue()].sort((a, b) => {
-						const first: number =
-							sortingBy === SortingBy.Date
-								? Number(new Date(a.snippet.publishedAt))
-								: Number(a.statistics.viewCount);
-						const second =
-							sortingBy === SortingBy.Date
-								? Number(new Date(b.snippet.publishedAt))
-								: Number(b.statistics.viewCount);
-						return second - first;
-					}),
-				);
-				break;
-			default:
-				this.searchResultsList$.next([...this.searchResponse$.getValue().items]);
-				break;
-		}
 	}
 }

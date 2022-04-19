@@ -5,10 +5,17 @@ import { SearchBarComponent } from './components/serch-bar/search-bar.component'
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { YoutubeApiInterceptor } from './interceptors/youtube-api.interceptor';
+import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
 
 @NgModule({
 	declarations: [HeaderComponent, SearchBarComponent, NotFoundComponent],
-	imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule],
+	imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule, HttpClientModule],
 	exports: [HeaderComponent],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: YoutubeApiInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },
+	],
 })
 export class CoreModule {}

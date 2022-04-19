@@ -1,18 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SearchMockupService } from '../../services/search-mockup.service';
+import { debounceTime, distinctUntilChanged, filter, map, Observable, Subscription } from 'rxjs';
+import { SearchBarService } from '../../services/search-mockup.service';
 
 @Component({
 	selector: 'app-search-bar',
 	templateUrl: './search-bar.component.html',
 	styleUrls: ['./search-bar.component.scss'],
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit, OnDestroy {
 	searchForm: FormGroup = new FormGroup({
 		searchInput: new FormControl(''),
 	});
 
-	constructor(private searchService: SearchMockupService) {}
+	searchStream$: Observable<string> = this.searchForm.valueChanges.pipe(
+		map((value) => value.searchInput),
+		filter((value) => value.length > 2),
+		debounceTime(500),
+		distinctUntilChanged(),
+	);
+
+	searchStreamSubscription!: Subscription;
+
+	constructor(private searchService: SearchBarService) {}
+
+	ngOnInit(): void {
+		this.searchStreamSubscription = this.searchStream$.subscribe((value) => {
+			this.searchService.search(value);
+		});
+	}
+
+	ngOnDestroy(): void {
+		this.searchStreamSubscription.unsubscribe();
+	}
 
 	onSubmit(e: Event): void {
 		e.preventDefault();

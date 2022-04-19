@@ -1,0 +1,62 @@
+<form [formGroup]="newCardForm" class="create-card-form">
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Enter a title</mat-label>
+		<input formControlName="title" matInput />
+		<mat-error appErrorHint *ngIf="newCardForm.get('title')?.hasError('required')"
+			>Please enter a title</mat-error
+		>
+		<mat-error appErrorHint *ngIf="newCardForm.get('title')?.hasError('minlength')"
+			>The title is too short</mat-error
+		>
+		<mat-error appErrorHint *ngIf="newCardForm.get('title')?.hasError('maxlength')"
+			>The title is too long</mat-error
+		>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Enter a description</mat-label>
+		<textarea matInput formControlName="description"></textarea>
+		<mat-error appErrorHint *ngIf="newCardForm.get('description')?.hasError('maxlength')"
+			>The description is too long</mat-error
+		>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Enter a link to the image</mat-label>
+		<input formControlName="imageUrl" matInput />
+		<mat-error appErrorHint *ngIf="newCardForm.get('imageUrl')?.hasError('required')"
+			>Please enter a link to the image</mat-error
+		>
+		<mat-error appErrorHint *ngIf="newCardForm.get('imageUrl')?.hasError('pattern')"
+			>The image link is invalid</mat-error
+		>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Enter a link to the video</mat-label>
+		<input formControlName="videoUrl" matInput />
+		<mat-error appErrorHint *ngIf="newCardForm.get('videoUrl')?.hasError('required')"
+			>Please enter a link to the video</mat-error
+		>
+		<mat-error appErrorHint *ngIf="newCardForm.get('videoUrl')?.hasError('pattern')"
+			>The video link is invalid</mat-error
+		>
+	</mat-form-field>
+
+	<mat-form-field class="example-full-width" appearance="outline" color="accent">
+		<mat-label>Enter a creation date:</mat-label>
+		<input matInput [matDatepicker]="picker" formControlName="creationDate" />
+		<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-datepicker #picker></mat-datepicker>
+		<mat-error appErrorHint *ngIf="newCardForm.get('creationDate')?.hasError('required')"
+			>Please enter a creation date</mat-error
+		>
+		<mat-error
+			appErrorHint
+			*ngIf="newCardForm.get('creationDate')?.hasError('dateBeforeCurrent')"
+			>The date is invalid</mat-error
+		>
+	</mat-form-field>
+
+	<button mat-flat-button color="accent" [disabled]="!newCardForm.valid">CREATE</button>
+</form>

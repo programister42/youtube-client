@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SearchItemModel } from '../../models/search-item.model';
+import { StatsItemModel } from '../../models/search-item.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-	@Input() video!: SearchItemModel;
+	@Input() video: StatsItemModel = {} as StatsItemModel;
 
 	constructor(private router: Router) {}
 

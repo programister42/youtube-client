@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Injectable({
 	providedIn: 'root',
 })
-export class SearchMockupService {
+export class SearchBarService {
 	searchValue$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 	isFiltering$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -14,7 +14,7 @@ export class SearchMockupService {
 
 	search(searchValue: string): void {
 		this.searchValue$.next(searchValue);
-		this.router.navigate(['youtube/search/', searchValue]);
+		this.router.navigate(['youtube/search', searchValue]);
 	}
 
 	toggleFiltering(): void {
